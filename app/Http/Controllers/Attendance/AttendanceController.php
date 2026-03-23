@@ -8,6 +8,7 @@ use App\Http\Requests\Attendance\ProductionRequest;
 use App\Models\Attendance\Attendance;
 use App\Services\Attendance\AttendanceListService;
 use App\Services\Attendance\AttendanceService;
+use App\Services\Attendance\HolidaySyncService;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -59,6 +60,22 @@ class AttendanceController extends Controller
 
         return response()->success([
             'message' => trans('global.marked', ['attribute' => trans('attendance.attendance')]),
+        ]);
+    }
+
+    public function syncHolidays(Request $request, HolidaySyncService $service)
+    {
+        $this->authorize('mark', Attendance::class);
+
+        $cancelled = $service->sync($request);
+
+        $message = trans('global.synched', ['attribute' => trans('calendar.holiday.holiday')]);
+        if ($cancelled > 0) {
+            $message .= " {$cancelled} approved leave request(s) were automatically cancelled.";
+        }
+
+        return response()->success([
+            'message' => $message,
         ]);
     }
 }
