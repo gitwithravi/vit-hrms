@@ -53,13 +53,13 @@ const options = ref({
     },
     scales: {
         x: {
-            stacked: true,
+            stacked: false,
             grid: {
                 display: false,
             },
         },
         y: {
-            stacked: true,
+            stacked: false,
             beginAtZero: true,
             ticks: {
                 precision: 0,
