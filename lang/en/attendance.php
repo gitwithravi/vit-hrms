@@ -8,6 +8,7 @@ return [
     'is_time_based' => 'Time based Attendance',
     'mark' => 'Mark Attendance',
     'mark_production' => 'Mark Production based Attendance',
+    'sync_holidays' => 'Sync Holidays',
     'filter_record' => 'Filter records to get list of employee.',
     'not_marked' => 'Attendance not marked for given data.',
     'could_not_perform_if_payroll_generated' => 'Could not perform this operation as payroll is generated.',
@@ -32,6 +33,7 @@ return [
     ],
     'props' => [
         'date' => 'Date of Attendance',
+        'month' => 'Month',
         'remarks' => 'Remarks',
         'value' => 'Value',
     ],

@@ -119,6 +119,21 @@ const attendance = {
                     throw error
                 })
         },
+        async syncHolidays({ state, commit }, payload) {
+            let url = state.initURL + "/holiday-sync"
+            return await Api.custom({
+                url,
+                method: "POST",
+                data: payload.form,
+            })
+                .then((response) => {
+                    toast.success(response.message)
+                })
+                .catch((error) => {
+                    commit("SET_FORM_ERRORS", Form.getErrors(error))
+                    throw error
+                })
+        },
         resetState({ commit }) {
             commit("RESET_STATE")
         },

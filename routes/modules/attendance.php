@@ -18,6 +18,7 @@ Route::prefix('attendance')->group(function () {
     Route::get('list', [AttendanceController::class, 'list'])->name('attendances.list');
     Route::get('fetch', [AttendanceController::class, 'fetch'])->name('attendances.fetch');
     Route::post('mark', [AttendanceController::class, 'mark'])->name('attendances.mark');
+    Route::post('holiday-sync', [AttendanceController::class, 'syncHolidays'])->name('attendances.syncHolidays');
     Route::get('production', [AttendanceController::class, 'fetchProduction'])->name('attendances.fetchProduction');
     Route::post('production', [AttendanceController::class, 'markProduction'])->name('attendances.markProduction');
 
