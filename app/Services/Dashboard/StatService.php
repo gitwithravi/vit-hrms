@@ -30,7 +30,7 @@ class StatService
             ->first();
 
         $leaveStat = LeaveRequest::query()
-            ->selectRaw('count(*) as total_leave_request')
+            ->selectRaw('count(case when created_at >= '."'".today()->startOfYear()->toDateString()."'".' then 1 end) as total_leave_request')
             ->selectRaw('count(case when created_at >= '."'".today()->startOfMonth()->toDateString()."'".' then 1 end) as total_leave_request_this_month')
             ->whereIn('employee_id', $accessibleEmployeeIds)
             ->first();
