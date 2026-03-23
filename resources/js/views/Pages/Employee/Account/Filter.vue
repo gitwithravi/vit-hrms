@@ -1,0 +1,44 @@
+<template>
+    <FilterForm :init-form="initForm" :form="form" @hide="emit('hide')">
+        <div class="grid grid-cols-3 gap-6">
+            <div class="col-span-3 sm:col-span-1">
+                <BaseInput
+                    type="text"
+                    v-model="form.name"
+                    name="name"
+                    :label="$trans('finance.account.props.name')"
+                />
+            </div>
+            <div class="col-span-3 sm:col-span-1">
+                <BaseInput
+                    type="text"
+                    v-model="form.alias"
+                    name="alias"
+                    :label="$trans('finance.account.props.alias')"
+                />
+            </div>
+            <div class="col-span-3 sm:col-span-1">
+                <BaseInput
+                    type="text"
+                    v-model="form.number"
+                    name="number"
+                    :label="$trans('finance.account.props.number')"
+                />
+            </div>
+        </div>
+    </FilterForm>
+</template>
+
+<script setup>
+import { reactive } from "vue"
+
+const emit = defineEmits(["hide"])
+
+const initForm = {
+    name: "",
+    alias: "",
+    number: "",
+}
+
+const form = reactive({ ...initForm })
+</script>
