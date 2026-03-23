@@ -5,7 +5,7 @@
                 attribute: $trans("attendance.attendance"),
             })
         }}</template>
-        <Line :data="data" :options="options" v-if="data.labels" />
+        <Bar :data="data" :options="options" v-if="data.labels" />
     </BaseCard>
 </template>
 
@@ -18,13 +18,12 @@ export default {
 <script setup>
 import { onMounted, reactive, ref } from "vue"
 import { useStore } from "vuex"
-import { Line } from "vue-chartjs"
+import { Bar } from "vue-chartjs"
 import {
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
-    PointElement,
-    LineElement,
+    BarElement,
     Title,
     Tooltip,
     Legend,
@@ -33,8 +32,7 @@ import {
 ChartJS.register(
     CategoryScale,
     LinearScale,
-    PointElement,
-    LineElement,
+    BarElement,
     Title,
     Tooltip,
     Legend
@@ -44,15 +42,32 @@ const store = useStore()
 
 const options = ref({
     responsive: true,
+    plugins: {
+        legend: {
+            position: "bottom",
+        },
+        tooltip: {
+            mode: "index",
+            intersect: false,
+        },
+    },
     scales: {
         x: {
             stacked: true,
+            grid: {
+                display: false,
+            },
         },
         y: {
             stacked: true,
+            beginAtZero: true,
+            ticks: {
+                precision: 0,
+            },
         },
     },
 })
+
 const isLoading = ref(false)
 const data = reactive({})
 
@@ -65,7 +80,7 @@ onMounted(async () => {
             isLoading.value = false
             Object.assign(data, response)
         })
-        .catch((e) => {
+        .catch(() => {
             isLoading.value = false
         })
 })
