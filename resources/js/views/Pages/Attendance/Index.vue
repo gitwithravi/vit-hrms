@@ -10,12 +10,37 @@
             <BaseButton
                 v-if="perform('attendance:mark')"
                 design="white"
+                @click="showSyncHolidays = true"
+            >
+                Sync Holidays
+            </BaseButton>
+            <BaseButton
+                v-if="perform('attendance:export')"
+                design="white"
+                @click="showAttendanceReport = true"
+            >
+                Download Report
+            </BaseButton>
+            <BaseButton
+                v-if="perform('attendance:mark')"
+                design="white"
                 @click="router.push({ name: 'AttendanceMark' })"
             >
                 {{ $trans("attendance.mark") }}
             </BaseButton>
         </PageHeaderAction>
     </PageHeader>
+
+    <SyncHolidaysModal
+        :visibility="showSyncHolidays"
+        @close="showSyncHolidays = false"
+        @completed="listAttendance"
+    />
+
+    <AttendanceReportModal
+        :visibility="showAttendanceReport"
+        @close="showAttendanceReport = false"
+    />
 
     <ParentTransition appear :visibility="true">
         <FilterForm
@@ -115,6 +140,8 @@ import { useStore } from "vuex"
 import { perform } from "@core/helpers/action"
 import { toBoolean } from "@core/helpers/string"
 import FilterForm from "./Filter.vue"
+import SyncHolidaysModal from "./SyncHolidaysModal.vue"
+import AttendanceReportModal from "./AttendanceReportModal.vue"
 
 const route = useRoute()
 const router = useRouter()
@@ -132,6 +159,8 @@ if (perform("attendance:export")) {
 
 const initUrl = "attendance/"
 const isLoading = ref(false)
+const showSyncHolidays = ref(false)
+const showAttendanceReport = ref(false)
 
 const dayWise = computed(() => toBoolean(route.query.dayWise))
 
