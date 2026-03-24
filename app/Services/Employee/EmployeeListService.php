@@ -71,6 +71,13 @@ class EmployeeListService extends ListGenerator
                 'visibility' => true,
             ],
             [
+                'key' => 'category',
+                'label' => trans('employee.props.category'),
+                'print_label' => 'category',
+                'sortable' => false,
+                'visibility' => true,
+            ],
+            [
                 'key' => 'createdAt',
                 'label' => trans('general.created_at'),
                 'print_label' => 'created_at.formatted',

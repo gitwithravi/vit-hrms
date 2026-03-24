@@ -62,7 +62,7 @@
         },
         "employee": {
             "employee:config": [],
-            "employee:read": ["manager", "staff"],
+            "employee:read": ["manager", "staff", "d-f-a"],
             "employee:create": ["manager"],
             "employee:edit": ["manager"],
             "employee:delete": [],

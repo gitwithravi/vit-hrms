@@ -54,7 +54,7 @@
                     >
                         <CardView
                             :img-src="employee.photo"
-                            :path="{
+                            :path="isDfa ? {} : {
                                 name: 'EmployeeShow',
                                 params: { uuid: employee.uuid },
                             }"
@@ -71,6 +71,9 @@
                             <p class="truncate text-sm text-gray-500">
                                 {{ employee.designation }} @
                                 {{ employee.branch }}
+                            </p>
+                            <p v-if="isDfa && employee.category" class="text-sm text-gray-500">
+                                {{ employee.category }}
                             </p>
                             <p class="text-sm text-gray-500">
                                 {{ employee.period }}
@@ -136,10 +139,13 @@
                     <DataCell name="branch">
                         {{ employee.branch }}
                     </DataCell>
+                    <DataCell name="category">
+                        {{ employee.category }}
+                    </DataCell>
                     <DataCell name="createdAt">
                         {{ employee.createdAt.formatted }}
                     </DataCell>
-                    <DataCell name="action">
+                    <DataCell name="action" v-if="!isDfa">
                         <FloatingMenu>
                             <FloatingMenuItem
                                 icon="fas fa-arrow-circle-right"
@@ -196,13 +202,15 @@ export default {
 <script setup>
 import { ref, reactive, inject } from "vue"
 import { useRoute, useRouter } from "vue-router"
-import { perform } from "@core/helpers/action"
+import { perform, actingAs } from "@core/helpers/action"
 import FilterForm from "./Filter.vue"
 
 const route = useRoute()
 const router = useRouter()
 
 const emitter = inject("emitter")
+
+const isDfa = actingAs("d-f-a")
 
 let userActions = ["filter", "view"]
 if (perform("employee:create")) {

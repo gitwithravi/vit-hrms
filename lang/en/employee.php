@@ -43,6 +43,7 @@ return [
         'code_number' => 'Employee Code',
         'joining_date' => 'Date of Joining',
         'leaving_date' => 'Date of Leaving',
+        'category' => 'Category',
     ],
     'employment_status' => [
         'employment_status' => 'Employment Status',

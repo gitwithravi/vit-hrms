@@ -34,6 +34,7 @@ class EmployeeListResource extends JsonResource
             'department' => $this->department_name ?? '-',
             'designation' => $this->designation_name ?? '-',
             'branch' => $this->branch_name ?? '-',
+            'category' => $this->category_name ?? '-',
             'employment_status_uuid' => $this->employment_status_uuid,
             'department_uuid' => $this->department_uuid,
             'designation_uuid' => $this->designation_uuid,
