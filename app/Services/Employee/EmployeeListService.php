@@ -101,13 +101,17 @@ class EmployeeListService extends ListGenerator
 
         $date = today()->toDateString();
 
+        $isDfa = auth()->user()->hasRole('d-f-a');
+
         return Employee::query()
             ->filterDfaAccessible()
             ->when($basic, function($q) use ($date) {
                 $q->summary($date);
-            }, function($q) use ($date) {
-                $q->detail($date)
-                ->filterAccessible();
+            }, function($q) use ($date, $isDfa) {
+                $q->detail($date);
+                if (! $isDfa) {
+                    $q->filterAccessible();
+                }
             })
             ->when($request->query('name'), function($q, $name) {
                 $q->where(\DB::raw('REGEXP_REPLACE(CONCAT_WS(" ", first_name, middle_name, third_name, last_name), "[[:space:]]+", " ")'), 'like', "%{$name}%");
