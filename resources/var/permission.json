@@ -92,7 +92,7 @@
         },
         "attendance": {
             "attendance:config": [],
-            "attendance:read": ["manager", "staff"],
+            "attendance:read": ["manager", "staff", "d-f-a"],
             "attendance:mark": ["manager"],
             "attendance:export": ["manager"],
             "work-shift:read": ["manager"],

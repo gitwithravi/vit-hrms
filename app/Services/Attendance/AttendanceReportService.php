@@ -191,10 +191,12 @@ class AttendanceReportService extends ListGenerator
 
     private function fetchEmployees(Request $request): Collection
     {
+        $isDfa = auth()->user()->hasRole('d-f-a');
+
         return Employee::query()
             ->detail()
             ->filterDfaAccessible()
-            ->filterAccessible()
+            ->when(! $isDfa, fn ($q) => $q->filterAccessible())
             ->where(fn ($q) => $q->whereNull('leaving_date')->orWhere('leaving_date', '>=', $request->start_date))
             ->orderBy('name')
             ->get();

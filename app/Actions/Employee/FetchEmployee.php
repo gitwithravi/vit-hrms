@@ -26,10 +26,12 @@ class FetchEmployee extends PaginationHelper
                 ->all();
         }
 
+        $isDfa = auth()->user()->hasRole('d-f-a');
+
         $employees = Employee::query()
             ->detail()
             ->filterDfaAccessible()
-            ->filterAccessible()
+            ->when(! $isDfa, fn ($q) => $q->filterAccessible())
             ->whereNotIn('employees.id', $excludedEmployeeIds)
             ->when(! $request->month_wise, function ($q) use ($request) {
                 $q->where(function ($q) use ($request) {
