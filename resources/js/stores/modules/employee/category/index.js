@@ -10,6 +10,7 @@ const initialState = () => ({
     formErrors: {},
     selectedEmployee: {},
     showFormModal: false,
+    showAssignModal: false,
 })
 
 const employee = {
@@ -42,7 +43,22 @@ const employee = {
         },
         updateSelectedEmployee({ state, commit }, payload) {
             state.selectedEmployee = payload;
-        }
+        },
+        updateShowAssignModal({ state }, payload) {
+            state.showAssignModal = payload;
+        },
+        bulkAssignCategory({ state, commit }, payload) {
+            return Api.custom({
+                url: state.initURL + "/bulk-assign",
+                method: "POST",
+                data: payload,
+            }).then((response) => {
+                toast.success(response.message)
+            }).catch((error) => {
+                commit("SET_FORM_ERRORS", Form.getErrors(error))
+                throw error
+            })
+        },
     },
     getters: {
         ...getters,
@@ -51,6 +67,9 @@ const employee = {
         },
         getSelectedEmployee(state) {
             return state.selectedEmployee;
+        },
+        getShowAssignModal(state) {
+            return state.showAssignModal;
         },
     },
 }

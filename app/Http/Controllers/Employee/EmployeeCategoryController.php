@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Employee\BulkAssignCategoryRequest;
 use App\Http\Requests\Employee\EmployeeCategoryRequest;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Models\Employee\Employee;
@@ -30,6 +31,17 @@ class EmployeeCategoryController extends Controller
         $this->authorize('viewAny', EmployeeCategory::class);
 
         return $service->paginate($request);
+    }
+
+    public function bulkAssign(BulkAssignCategoryRequest $request, EmployeeCategoryService $service)
+    {
+        $this->authorize('update', EmployeeCategory::class);
+
+        $count = $service->bulkAssignByDesignation($request);
+
+        return response()->success([
+            'message' => trans('global.updated', ['attribute' => trans('employee.employee-category')])." ({$count} employees)",
+        ]);
     }
 
     public function update(EmployeeCategoryRequest $request, $employee, EmployeeCategoryService $service)
