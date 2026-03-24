@@ -36,6 +36,6 @@ class AssignPermissionSeeder extends Seeder
             }
         }
 
-        \DB::table('role_has_permissions')->insert($role_permission);
+        \DB::table('role_has_permissions')->upsert($role_permission, ['permission_id', 'role_id']);
     }
 }
