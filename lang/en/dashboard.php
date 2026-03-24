@@ -8,6 +8,7 @@ return [
     'total_employee' => 'Total Employee',
     'total_leave_request' => 'Total Leave Request',
     'total_payroll' => 'Total Payroll Generated',
+    'category_breakdown' => 'Staff',
     'gender_wise_employee_count' => 'Gender Wise Count',
     'joining_date_wise_employee_count' => 'Joining Date Wise Count',
     'key_to_search' => ' to Search',

@@ -1,9 +1,9 @@
 <template>
     <div v-if="isStaff">
-        <div class="bg-black px-4 pb-16 pt-6" v-if="isAdmin">
+        <div class="bg-black px-4 pb-16 pt-6" v-if="isAdmin || isDfa">
             <DashboardStat />
         </div>
-        <BaseFlexContainer class="px-4" :class="isAdmin ? '-mt-10' : 'mt-5'">
+        <BaseFlexContainer class="px-4" :class="(isAdmin || isDfa) ? '-mt-10' : 'mt-5'">
             <BaseFlexCard class="md:w-1/3">
                 <DashboardAgenda />
             </BaseFlexCard>
@@ -28,4 +28,5 @@ import DashboardRecord from "./Record.vue"
 
 const isStaff = getAuthUser("isStaff")
 const isAdmin = actingAs("admin")
+const isDfa = actingAs("d-f-a")
 </script>

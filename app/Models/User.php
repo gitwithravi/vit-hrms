@@ -211,6 +211,10 @@ class User extends Authenticatable
 
     public function getIsStaffAttribute()
     {
+        if ($this->hasRole('d-f-a')) {
+            return true;
+        }
+
         if ($this->hasAnyRole(['user'])) {
             return false;
         }

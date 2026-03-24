@@ -4,6 +4,7 @@ namespace App\Services\Dashboard;
 
 use App\Concerns\SubordinateAccess;
 use App\Models\Employee\Employee;
+use App\Models\Employee\EmployeeCategory;
 use App\Models\Leave\Request as LeaveRequest;
 use App\Models\Payroll\Payroll;
 use Illuminate\Http\Request;
@@ -13,6 +14,15 @@ class StatService
     use SubordinateAccess;
 
     public function getData(Request $request)
+    {
+        if (auth()->user()->hasRole('d-f-a')) {
+            return $this->getDfaData($request);
+        }
+
+        return $this->getAdminData($request);
+    }
+
+    private function getAdminData(Request $request): array
     {
         $accessibleEmployeeIds = $this->getAccessibleEmployeeIds();
 
@@ -65,6 +75,56 @@ class StatService
                 'color' => 'bg-info',
                 'secondary_title' => trans('global.this_duration', ['attribute' => trans('list.durations.month')]),
                 'secondary_count' => $payrollStat->total_payroll_this_month,
+            ],
+        ];
+
+        return compact('stats');
+    }
+
+    private function getDfaData(Request $request): array
+    {
+        $accessibleEmployeeIds = $this->getAccessibleEmployeeIds();
+
+        $totalEmployees = count($accessibleEmployeeIds);
+
+        $newThisMonth = Employee::query()
+            ->whereIn('employees.id', $accessibleEmployeeIds)
+            ->where('joining_date', '>=', today()->startOfMonth()->toDateString())
+            ->count();
+
+        $leaveStat = LeaveRequest::query()
+            ->selectRaw('count(case when created_at >= '."'".today()->startOfYear()->toDateString()."'".' then 1 end) as total_leave_request')
+            ->selectRaw('count(case when created_at >= '."'".today()->startOfMonth()->toDateString()."'".' then 1 end) as total_leave_request_this_month')
+            ->whereIn('employee_id', $accessibleEmployeeIds)
+            ->first();
+
+        $staffCount = EmployeeCategory::where('category', 'staff')->count();
+        $employeeCount = EmployeeCategory::where('category', 'employee')->count();
+
+        $stats = [
+            [
+                'title' => trans('dashboard.total_employee'),
+                'count' => $totalEmployees,
+                'icon' => 'fas fa-users',
+                'color' => 'bg-success',
+                'secondary_title' => trans('global.this_duration', ['attribute' => trans('list.durations.month')]),
+                'secondary_count' => $newThisMonth,
+            ],
+            [
+                'title' => trans('dashboard.total_leave_request'),
+                'count' => $leaveStat->total_leave_request,
+                'icon' => 'fas fa-sticky-note',
+                'color' => 'bg-primary dark:bg-gray-700',
+                'secondary_title' => trans('global.this_duration', ['attribute' => trans('list.durations.month')]),
+                'secondary_count' => $leaveStat->total_leave_request_this_month,
+            ],
+            [
+                'title' => trans('dashboard.category_breakdown'),
+                'count' => $staffCount,
+                'icon' => 'fas fa-layer-group',
+                'color' => 'bg-info',
+                'secondary_title' => trans('employee.props.category'),
+                'secondary_count' => $employeeCount,
             ],
         ];
 
