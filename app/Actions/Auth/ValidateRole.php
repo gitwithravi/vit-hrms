@@ -19,6 +19,10 @@ class ValidateRole
             return;
         }
 
+        if ($user->hasRole('d-f-a')) {
+            return;
+        }
+
         $employee = Employee::query()
             ->select('employees.id', 'employees.contact_id', 'employees.leaving_date', 'contacts.user_id')
             ->join('contacts', 'employees.contact_id', '=', 'contacts.id')

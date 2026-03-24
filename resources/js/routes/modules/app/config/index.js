@@ -103,6 +103,18 @@ export default [
                     import("@views/Pages/Config/SocialNetwork/Index.vue"),
             },
             ...locale,
+            {
+                path: "dfa",
+                name: "ConfigDfa",
+                meta: {
+                    label: "team.config.dfa.dfa",
+                    icon: "fas fa-user-shield",
+                    key: "dfa",
+                    roles: ["admin"],
+                },
+                component: () =>
+                    import("@views/Pages/Config/DFA/Index.vue"),
+            },
         ],
     },
 ]

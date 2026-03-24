@@ -22,7 +22,16 @@ const dfa = {
         resetState: actions.resetState,
         list: actions.list,
         create: actions.create,
-        delete: actions.delete,
+        async delete({ state, commit }, payload) {
+            await Api.destroy(state.initURL, payload.moduleUuid)
+            .then((response) => {
+                toast.success(response.message)
+            })
+            .catch((error) => {
+                Form.getErrors(error)
+                throw error
+            })
+        },
         async preRequisite({ state, commit }, payload) {
             let url = state.initURL + "/" + payload.uuid + state.module
             return await Api.custom(
@@ -48,8 +57,7 @@ const dfa = {
             })
         },
         async assignDfaRole({ state, commit, dispatch }, payload) {
-            let url = state.initURL + "/" + payload.uuid + state.module
-            await Api.store(url + "/user/assign", payload.form)
+            await Api.store(state.initURL + "/assign", payload.form)
             .then((response) => {
                 toast.success(response.message)
             })
@@ -57,8 +65,6 @@ const dfa = {
                 commit("SET_FORM_ERRORS", Form.getErrors(error))
                 throw error
             })
-
-            await dispatch("auth/user/fetch", null, { root: true })
         },
     },
 

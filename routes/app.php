@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('role:admin')->group(function () {
     Route::get('teams/dfa', [DfaController::class, 'dfaList']);
     Route::post('teams/dfa/assign', [DfaController::class, 'dfaAssign']);
-    Route::delete('teams/dfa/revoke', [DfaController::class, 'dfaRevoke']);
+    Route::delete('teams/dfa/{user}', [DfaController::class, 'dfaRevoke']);
     Route::get('teams/dfa/user/search', [DfaController::class, 'searchUser']);
     Route::get('teams/dfa/pre-requisite', [DfaController::class, 'preRequisite']);
 });
