@@ -20,3 +20,4 @@ yarn-error.log
 /__MACOSX
 *.zip
 *.patch
+public/site/build/
