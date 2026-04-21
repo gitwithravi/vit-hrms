@@ -1,5 +1,9 @@
 <template>
     <ListItem :init-url="initUrl" @setItems="setItems">
+        <TimesheetReportModal
+            :visibility="showTimesheetReport"
+            @close="showTimesheetReport = false"
+        />
         <template #header>
             <PageHeader
                 :title="$trans('attendance.timesheet.timesheet')"
@@ -19,6 +23,14 @@
                     @toggleFilter="showFilter = !showFilter"
                     @toggleImport="showImport = !showImport"
                 >
+                    <BaseButton
+                        v-if="perform('timesheet:export')"
+                        design="white"
+                        @click="showTimesheetReport = true"
+                    >
+                        <i class="fas fa-download mr-2"></i>
+                        Export Timesheet Report
+                    </BaseButton>
                     <BaseButton
                         design="white"
                         v-if="
@@ -235,6 +247,7 @@ import { useStore } from "vuex"
 import { perform } from "@core/helpers/action"
 import { confirmAction } from "@core/helpers/alert"
 import FilterForm from "./Filter.vue"
+import TimesheetReportModal from "./ReportModal.vue"
 
 const route = useRoute()
 const router = useRouter()
@@ -260,6 +273,7 @@ const initUrl = "attendance/timesheet/"
 const isLoading = ref(false)
 const showFilter = ref(false)
 const showImport = ref(false)
+const showTimesheetReport = ref(false)
 
 const timesheets = reactive({})
 
