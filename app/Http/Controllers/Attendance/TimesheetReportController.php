@@ -43,8 +43,8 @@ class TimesheetReportController extends Controller
                 $timesheet->employee?->name ?? '-',
                 $timesheet->employee?->code_number ?? '-',
                 $timesheet->date->value ? Carbon::parse($timesheet->date->value)->toDateString() : '-',
-                $inAt ? Carbon::parse($inAt)->format('H:i:s') : '-',
-                $outAt ? Carbon::parse($outAt)->format('H:i:s') : '-',
+                $inAt ? Carbon::parse($inAt, 'UTC')->setTimezone('Asia/Kolkata')->format('H:i:s') : '-',
+                $outAt ? Carbon::parse($outAt, 'UTC')->setTimezone('Asia/Kolkata')->format('H:i:s') : '-',
                 $duration,
             ];
         })->all();
