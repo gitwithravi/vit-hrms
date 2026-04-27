@@ -77,6 +77,17 @@ class RequestStatusRequest extends FormRequest
             }
 
             $balance = $leaveAllocationRecord->allotted - $leaveAllocationRecord->used;
+            $isUpcoming = $leaveRequest->start_date->value > today()->toDateString();
+
+            if ($this->status == LeaveRequestStatus::WITHDRAWN->value) {
+                if (! in_array($leaveRequest->status, [LeaveRequestStatus::REQUESTED, LeaveRequestStatus::APPROVED])) {
+                    throw ValidationException::withMessages(['message' => trans('leave.request.could_not_withdraw_if_status_not_requested_or_approved')]);
+                }
+
+                if (! $isUpcoming) {
+                    throw ValidationException::withMessages(['message' => trans('leave.request.could_not_withdraw_if_not_upcoming')]);
+                }
+            }
 
             if ($this->status == LeaveRequestStatus::APPROVED->value) {
                 if ($leaveRequest->status != LeaveRequestStatus::APPROVED && $balance < $duration) {

@@ -3,6 +3,7 @@
 namespace App\Policies\Leave;
 
 use App\Concerns\SubordinateAccess;
+use App\Enums\Leave\RequestStatus as LeaveRequestStatus;
 use App\Models\Leave\Request as LeaveRequest;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -79,6 +80,24 @@ class RequestPolicy
         }
 
         return $this->isAccessibleEmployee($leaveRequest->employee);
+    }
+
+    /**
+     * Determine whether the user can withdraw the leave request.
+     *
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function withdraw(User $user, LeaveRequest $leaveRequest)
+    {
+        if (! in_array($leaveRequest->status, [LeaveRequestStatus::REQUESTED, LeaveRequestStatus::APPROVED])) {
+            return false;
+        }
+
+        if ($leaveRequest->start_date->value <= today()->toDateString()) {
+            return false;
+        }
+
+        return $user->id == $leaveRequest->employee?->user_id;
     }
 
     /**
