@@ -12,6 +12,8 @@ return [
         'range_exists' => 'Leave request for the employee already exists between :start and :end.',
         'could_not_perform_if_status_updated' => 'Could not perform this operation if status is already updated.',
         'could_not_perform_if_payroll_generated' => 'Could not perform this operation if payroll is generated for this duration.',
+        'could_not_withdraw_if_not_upcoming' => 'Only upcoming leave requests can be withdrawn.',
+        'could_not_withdraw_if_status_not_requested_or_approved' => 'Only requested or approved leave requests can be withdrawn.',
         'statuses' => [
             'requested' => 'Requested',
             'rejected' => 'Rejected',

@@ -166,7 +166,7 @@
                             </ShowButton>
                         </template>
                     </BaseCard>
-                    <BaseCard v-if="perform('leave-request:action')">
+                    <BaseCard v-if="canTakeAction">
                         <template #title>
                             {{ $trans("leave.request.action") }}
                         </template>
@@ -228,7 +228,7 @@ export default {
 </script>
 
 <script setup>
-import { reactive, ref } from "vue"
+import { computed, reactive, ref } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { useStore } from "vuex"
 import { perform, getFormErrors } from "@core/helpers/action"
@@ -257,6 +257,13 @@ const leaveRequest = reactive({ ...initialLeaveRequest })
 
 const setPreRequisites = (data) => {
     Object.assign(preRequisites, data)
+
+    if (leaveRequest.canWithdraw) {
+        preRequisites.statuses = preRequisites.statuses.filter(
+            ({ value }) => value === "withdrawn",
+        )
+        form.status = "withdrawn"
+    }
 }
 
 const setItem = (data) => {
@@ -266,4 +273,8 @@ const setItem = (data) => {
 const afterSubmit = () => {
     refreshItem.value = true
 }
+
+const canTakeAction = computed(
+    () => perform("leave-request:action") || leaveRequest.canWithdraw,
+)
 </script>

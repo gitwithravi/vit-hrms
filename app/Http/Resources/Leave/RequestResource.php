@@ -37,6 +37,10 @@ class RequestResource extends JsonResource
             'alternate_arrangement' => $this->alternate_arrangement,
             'comment' => $this->comment,
             'status' => RequestStatus::getDetail($this->status),
+            'can_withdraw' => auth()->check()
+                && auth()->id() == $this->employee?->user_id
+                && in_array($this->status, [RequestStatus::REQUESTED, RequestStatus::APPROVED])
+                && $this->start_date->value > today()->toDateString(),
             'records' => RequestRecordResource::collection($this->whenLoaded('records')),
             'media_token' => $this->getMeta('media_token'),
             'media' => MediaResource::collection($this->whenLoaded('media')),
