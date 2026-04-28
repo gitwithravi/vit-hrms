@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Leave;
 
 use App\Helpers\CalHelper;
+use App\Enums\Leave\RequestStatus as LeaveRequestStatus;
 use App\Models\Employee\Employee;
 use App\Models\Leave\Allocation as LeaveAllocation;
 use App\Models\Leave\Request as LeaveRequest;
@@ -59,6 +60,7 @@ class RequestRequest extends FormRequest
 
             $overlappingRequest = LeaveRequest::query()
                 ->whereEmployeeId($employee->id)
+                ->whereIn('status', [LeaveRequestStatus::REQUESTED, LeaveRequestStatus::APPROVED])
                 ->when($uuid, function ($q, $uuid) {
                     $q->where('uuid', '!=', $uuid);
                 })
