@@ -80,6 +80,20 @@ return [
         'module_title' => 'Assign Work Shift',
         'module_description' => 'Work Shifts are the time slots your company has for its employees.',
     ],
+    'mediclaim' => [
+        'mediclaim' => 'Mediclaim',
+        'dependant' => 'Mediclaim Dependant',
+        'dependants' => 'Mediclaim Dependants',
+        'module_title' => 'Manage all mediclaim dependant records',
+        'module_description' => 'Keep dependant details submitted by employees for mediclaim.',
+        'edit_disabled' => 'Mediclaim dependant editing is currently disabled.',
+        'edit_disabled_info' => 'Mediclaim dependant editing is currently disabled by admin.',
+        'props' => [
+            'name' => 'Dependant Name',
+            'relationship' => 'Relationship',
+            'top_up' => 'Top Up',
+        ],
+    ],
     'qualification' => [
         'qualification' => 'Qualification',
         'module_title' => 'Manage all Employee Qualification Records',

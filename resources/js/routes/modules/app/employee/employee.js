@@ -213,6 +213,18 @@ export default [
                 component: () => import("@views/Pages/Employee/EditLogin.vue"),
             },
             {
+                path: "mediclaim-dependants",
+                name: "EmployeeMediclaimDependants",
+                meta: {
+                    type: "general",
+                    action: "general",
+                    trans: "employee.mediclaim.dependants",
+                    label: "employee.mediclaim.dependants",
+                },
+                component: () =>
+                    import("@views/Pages/Employee/MediclaimDependants.vue"),
+            },
+            {
                 path: "records",
                 name: "EmployeeRecord",
                 redirect: { name: "EmployeeRecordList" },

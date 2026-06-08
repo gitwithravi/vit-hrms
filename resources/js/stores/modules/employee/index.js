@@ -10,6 +10,7 @@ import account from "@stores/modules/employee/account"
 import document from "@stores/modules/employee/document"
 import experience from "@stores/modules/employee/experience"
 import category from "@stores/modules/employee/category"
+import mediclaimDependant from "@stores/modules/employee/mediclaimDependant"
 
 const toast = useToast()
 
@@ -29,6 +30,7 @@ const employee = {
         document,
         experience,
         category,
+        mediclaimDependant,
     },
     mutations: {
         ...mutations,

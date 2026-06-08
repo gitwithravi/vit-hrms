@@ -5,6 +5,7 @@ use App\Http\Controllers\Employee\DocumentController;
 use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\Employee\EmployeeImportController;
 use App\Http\Controllers\Employee\ExperienceController;
+use App\Http\Controllers\Employee\MediclaimDependantController;
 use App\Http\Controllers\Employee\PhotoController;
 use App\Http\Controllers\Employee\QualificationController;
 use App\Http\Controllers\Employee\RecordController;
@@ -44,5 +45,12 @@ Route::middleware('permission:employee:read')->group(function () {
 
     Route::get('employees/pre-requisite', [EmployeeController::class, 'preRequisite'])->name('employees.preRequisite');
     Route::post('employees/import', EmployeeImportController::class)->middleware('permission:employees:create')->name('employees.import');
+    Route::get('mediclaim-dependants/pre-requisite', [MediclaimDependantController::class, 'preRequisite'])->name('mediclaim-dependants.preRequisite');
+    Route::get('mediclaim-dependants', [MediclaimDependantController::class, 'index'])->name('mediclaim-dependants.index');
     Route::apiResource('employees', EmployeeController::class);
 });
+
+Route::get('employees/{employee}/mediclaim-dependants', [MediclaimDependantController::class, 'showForEmployee'])->name('employees.mediclaim-dependants.show');
+Route::put('employees/{employee}/mediclaim-dependants', [MediclaimDependantController::class, 'storeForEmployee'])
+    ->middleware('test.mode.restriction')
+    ->name('employees.mediclaim-dependants.store');

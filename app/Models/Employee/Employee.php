@@ -60,6 +60,11 @@ class Employee extends Model
         return $this->hasMany(Record::class);
     }
 
+    public function mediclaimDependants(): HasMany
+    {
+        return $this->hasMany(MediclaimDependant::class);
+    }
+
     public function qualifications(): HasMany
     {
         return $this->hasMany(Qualification::class, 'employee_id');

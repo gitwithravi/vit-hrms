@@ -7,6 +7,7 @@ use App\Http\Controllers\Employee\DocumentExportController;
 use App\Http\Controllers\Employee\EmployeeExportController;
 use App\Http\Controllers\Employee\ExperienceController;
 use App\Http\Controllers\Employee\ExperienceExportController;
+use App\Http\Controllers\Employee\MediclaimDependantExportController;
 use App\Http\Controllers\Employee\QualificationController;
 use App\Http\Controllers\Employee\QualificationExportController;
 use App\Http\Controllers\Employee\RecordController;
@@ -30,3 +31,7 @@ Route::prefix('employees')->group(function () {
 
     Route::get('export', EmployeeExportController::class)->middleware('permission:employee:export')->name('employees.export');
 });
+
+Route::get('mediclaim-dependants/export', MediclaimDependantExportController::class)
+    ->middleware('permission:employee:export')
+    ->name('mediclaim-dependants.export');

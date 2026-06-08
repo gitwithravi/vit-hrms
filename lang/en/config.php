@@ -118,6 +118,7 @@ return [
             'show_version_number' => 'Show Version Number',
             'dark_theme' => 'Dark Theme',
             'mini_sidebar' => 'Mini Sidebar',
+            'mediclaim_dependant_edit' => 'Mediclaim Dependant Editing',
         ],
     ],
     'feature' => [

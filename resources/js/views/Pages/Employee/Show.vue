@@ -81,6 +81,11 @@ const navigations = [
         label: "contact.login.login",
     },
     {
+        name: "EmployeeMediclaimDependants",
+        icon: "fas fa-chevron-right",
+        label: "employee.mediclaim.dependants",
+    },
+    {
         name: "EmployeeQualification",
         icon: "fas fa-chevron-right",
         label: "employee.qualification.qualification",

@@ -23,6 +23,7 @@ class AuthServiceProvider extends \Illuminate\Foundation\Support\Providers\AuthS
         'App\Models\Company\Designation' => 'App\Policies\Company\DesignationPolicy',
         'App\Models\Company\Branch' => 'App\Policies\Company\BranchPolicy',
         'App\Models\Employee\Employee' => 'App\Policies\Employee\EmployeePolicy',
+        'App\Models\Employee\MediclaimDependant' => 'App\Policies\Employee\MediclaimDependantPolicy',
         'App\Models\Finance\Ledger' => 'App\Policies\Finance\LedgerPolicy',
         'App\Models\Finance\Transaction' => 'App\Policies\Finance\TransactionPolicy',
         'App\Models\Calendar\Holiday' => 'App\Policies\Calendar\HolidayPolicy',

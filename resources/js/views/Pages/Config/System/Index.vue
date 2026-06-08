@@ -160,6 +160,22 @@
                         v-model:error="formErrors.enableMiniSidebar"
                     />
                 </div>
+                <div class="col-span-3 sm:col-span-1">
+                    <BaseSwitch
+                        v-model="form.enableMediclaimDependantEdit"
+                        name="enableMediclaimDependantEdit"
+                        :label="
+                            $trans('global.enable', {
+                                attribute: $trans(
+                                    'config.system.props.mediclaim_dependant_edit'
+                                ),
+                            })
+                        "
+                        v-model:error="
+                            formErrors.enableMediclaimDependantEdit
+                        "
+                    />
+                </div>
             </div>
 
             <CardHeader
@@ -248,6 +264,7 @@ const initForm = {
     timezone: "",
     enableDarkTheme: false,
     enableMiniSidebar: false,
+    enableMediclaimDependantEdit: false,
     perPage: "",
     currency: "",
     currencies: [],

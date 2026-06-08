@@ -64,6 +64,10 @@
             "value": true
         },
         {
+            "name": "enable_mediclaim_dependant_edit",
+            "value": false
+        },
+        {
             "name": "enable_maintenance_mode",
             "value": false
         },

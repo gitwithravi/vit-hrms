@@ -18,6 +18,7 @@ class ConfigSeeder extends Seeder
         $config->value = [
             'show_setup_wizard' => true,
             'enable_dark_theme' => false,
+            'enable_mediclaim_dependant_edit' => false,
         ];
         $config->save();
     }

@@ -15,6 +15,7 @@ class StoreSystemConfig
     {
         $input = request()->validate([
             'show_setup_wizard' => 'sometimes|boolean',
+            'enable_mediclaim_dependant_edit' => 'sometimes|boolean',
             'enable_maintenance_mode' => 'sometimes|boolean',
             'maintenance_mode_message' => 'required_if:enable_maintenance_mode,true|max:200',
             'timezone' => 'sometimes|required',
@@ -32,6 +33,7 @@ class StoreSystemConfig
             'maintenance_mode_message.required_if' => __('validation.required', ['attribute' => __('config.system.props.maintenance_mode_message')]),
         ], [
             'show_setup_wizard' => __('config.system.props.setup_wizard'),
+            'enable_mediclaim_dependant_edit' => __('config.system.props.mediclaim_dependant_edit'),
             'enable_maintenance_mode' => __('config.system.props.maintenance_mode'),
             'maintenance_mode_message' => __('config.system.props.maintenance_mode_message'),
             'timezone' => __('config.system.props.timezone'),

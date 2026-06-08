@@ -53,16 +53,16 @@ class EmployeePolicy
      */
     public function view(User $user, Employee $employee)
     {
-        if (! $user->can('employee:read')) {
-            return false;
-        }
-
         if (! $this->validateTeam($user, $employee)) {
             return false;
         }
 
         if ($employee?->user_id == auth()->id()) {
             return true;
+        }
+
+        if (! $user->can('employee:read')) {
+            return false;
         }
 
         return true;
