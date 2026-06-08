@@ -60,6 +60,20 @@ class MediclaimDependantListService extends ListGenerator
                 'visibility' => true,
             ],
             [
+                'key' => 'gender',
+                'label' => trans('employee.mediclaim.props.gender'),
+                'print_label' => 'gender_label',
+                'sortable' => false,
+                'visibility' => true,
+            ],
+            [
+                'key' => 'dob',
+                'label' => trans('employee.mediclaim.props.dob'),
+                'print_label' => 'dob.formatted',
+                'sortable' => false,
+                'visibility' => true,
+            ],
+            [
                 'key' => 'topUp',
                 'label' => trans('employee.mediclaim.props.top_up'),
                 'print_label' => 'top_up_label',
@@ -91,6 +105,7 @@ class MediclaimDependantListService extends ListGenerator
             ->filter([
                 'App\QueryFilters\LikeMatch:name',
                 'App\QueryFilters\ExactMatch:relationship',
+                'App\QueryFilters\ExactMatch:gender',
                 'App\QueryFilters\ExactMatch:top_up',
                 'App\QueryFilters\DateBetween:created_at,created_at,created_at,created_at',
             ]);

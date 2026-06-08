@@ -27,6 +27,7 @@ class MediclaimDependantService
     {
         return [
             'relationships' => MediclaimDependant::relationshipOptions(),
+            'genders' => MediclaimDependant::genderOptions(),
             'topUpOptions' => MediclaimDependant::topUpOptions(),
             'canEdit' => (bool) config('config.system.enable_mediclaim_dependant_edit'),
         ];
@@ -64,6 +65,8 @@ class MediclaimDependantService
                 if (
                     blank(Arr::get($dependant, 'name'))
                     && blank(Arr::get($dependant, 'relationship'))
+                    && blank(Arr::get($dependant, 'gender'))
+                    && blank(Arr::get($dependant, 'dob'))
                 ) {
                     continue;
                 }
@@ -72,6 +75,8 @@ class MediclaimDependantService
                     'employee_id' => $employee->id,
                     'name' => Arr::get($dependant, 'name'),
                     'relationship' => Arr::get($dependant, 'relationship'),
+                    'gender' => Arr::get($dependant, 'gender'),
+                    'dob' => Arr::get($dependant, 'dob'),
                     'top_up' => $topUp,
                 ]);
             }

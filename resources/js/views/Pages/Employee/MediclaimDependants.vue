@@ -21,20 +21,9 @@
                     {{ $trans("employee.mediclaim.edit_disabled_info") }}
                 </TextMuted>
 
-                <div>
-                    <BaseLabel for="top_up">
-                        {{ $trans("employee.mediclaim.props.top_up") }}
-                    </BaseLabel>
-                    <BaseRadioGroup
-                        top-margin
-                        v-model="form.top_up"
-                        :disabled="!canEdit"
-                        name="top_up"
-                        :options="topUpOptions"
-                        :error="formErrors.top_up"
-                        @update:error="delete formErrors.top_up"
-                    />
-                </div>
+                <BaseAlert v-if="canEdit" design="info">
+                    You can add up to 5 dependants, adding all the 5 dependants is not mandatory
+                </BaseAlert>
 
                 <div class="space-y-4">
                     <BaseCard
@@ -46,8 +35,8 @@
                             {{ index + 1 }}
                         </template>
 
-                        <div class="grid grid-cols-3 gap-6">
-                            <div class="col-span-3 sm:col-span-1">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
                                 <BaseInput
                                     type="text"
                                     v-model="dependant.name"
@@ -60,7 +49,7 @@
                                     @update:error="clearError(index, 'name')"
                                 />
                             </div>
-                            <div class="col-span-3 sm:col-span-1">
+                            <div>
                                 <BaseSelect
                                     v-model="dependant.relationship"
                                     :disabled="!canEdit"
@@ -77,9 +66,53 @@
                                     "
                                 />
                             </div>
+                            <div>
+                                <BaseLabel>
+                                    {{ $trans("employee.mediclaim.props.gender") }}
+                                </BaseLabel>
+                                <BaseRadioGroup
+                                    top-margin
+                                    horizontal
+                                    v-model="dependant.gender"
+                                    :disabled="!canEdit"
+                                    :name="`dependants.${index}.gender`"
+                                    :options="genders"
+                                    :error="getError(index, 'gender')"
+                                    @update:error="
+                                        clearError(index, 'gender')
+                                    "
+                                />
+                            </div>
+                            <div>
+                                <DatePicker
+                                    v-model="dependant.dob"
+                                    :disabled="!canEdit"
+                                    :name="`dependants.${index}.dob`"
+                                    :label="
+                                        $trans('employee.mediclaim.props.dob')
+                                    "
+                                    :error="getError(index, 'dob')"
+                                    @update:error="clearError(index, 'dob')"
+                                />
+                            </div>
                         </div>
                     </BaseCard>
                 </div>
+
+                <BaseCard>
+                    <template #title>
+                        {{ $trans("employee.mediclaim.props.top_up") }}
+                    </template>
+                    <BaseRadioGroup
+                        horizontal
+                        v-model="form.top_up"
+                        :disabled="!canEdit"
+                        name="top_up"
+                        :options="topUpOptions"
+                        :error="formErrors.top_up"
+                        @update:error="delete formErrors.top_up"
+                    />
+                </BaseCard>
 
                 <div class="flex flex-wrap gap-4" v-if="canEdit">
                     <BaseButton :disabled="isSubmitting" @click="submit">
@@ -120,6 +153,7 @@ const isLoading = ref(false)
 const isSubmitting = ref(false)
 const canEdit = ref(false)
 const relationships = ref([])
+const genders = ref([])
 const topUpOptions = ref([])
 const formErrors = reactive({})
 
@@ -134,12 +168,16 @@ const newDependant = () => ({
     key: Math.random().toString(16).slice(2),
     name: "",
     relationship: "",
+    gender: "",
+    dob: "",
 })
 
 const mapDependant = (dependant) => ({
     key: dependant.uuid || Math.random().toString(16).slice(2),
     name: dependant.name || "",
     relationship: dependant.relationship || "",
+    gender: dependant.gender || "",
+    dob: dependant.dob?.value || "",
 })
 
 const fillDependantSlots = (dependants = []) => {
@@ -179,6 +217,7 @@ const fetchDependants = async () => {
     })
         .then((response) => {
             relationships.value = response.relationships || []
+            genders.value = response.genders || []
             topUpOptions.value = response.topUpOptions || []
             canEdit.value = response.canEdit
             form.top_up = response.topUp || ""
@@ -205,6 +244,8 @@ const submit = async () => {
             dependants: form.dependants.map((dependant) => ({
                 name: dependant.name,
                 relationship: dependant.relationship,
+                gender: dependant.gender,
+                dob: dependant.dob,
             })),
         },
     })

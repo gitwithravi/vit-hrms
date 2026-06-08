@@ -91,6 +91,8 @@ return [
         'props' => [
             'name' => 'Dependant Name',
             'relationship' => 'Relationship',
+            'gender' => 'Gender',
+            'dob' => 'Date of Birth',
             'top_up' => 'Top Up',
         ],
     ],

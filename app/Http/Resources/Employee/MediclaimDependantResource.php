@@ -19,6 +19,9 @@ class MediclaimDependantResource extends JsonResource
             'name' => $this->name,
             'relationship' => $this->relationship,
             'relationship_label' => $this->relationship_label,
+            'gender' => $this->gender,
+            'gender_label' => $this->gender_label,
+            'dob' => $this->dob ? \Cal::date($this->dob) : null,
             'top_up' => $this->top_up,
             'top_up_label' => $this->top_up_label,
             'employee' => $this->whenLoaded('employee', fn () => [

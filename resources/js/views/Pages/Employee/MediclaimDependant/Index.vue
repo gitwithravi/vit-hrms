@@ -60,6 +60,12 @@
                     <DataCell name="relationship">
                         {{ dependant.relationshipLabel }}
                     </DataCell>
+                    <DataCell name="gender">
+                        {{ dependant.genderLabel }}
+                    </DataCell>
+                    <DataCell name="dob">
+                        {{ dependant.dob?.formatted }}
+                    </DataCell>
                     <DataCell name="topUp">
                         {{ dependant.topUpLabel }}
                     </DataCell>
@@ -93,6 +99,7 @@ const showFilter = ref(false)
 const dependants = reactive({})
 const preRequisites = reactive({
     relationships: [],
+    genders: [],
     topUpOptions: [],
 })
 

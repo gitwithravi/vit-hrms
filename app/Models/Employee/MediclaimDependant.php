@@ -16,6 +16,10 @@ class MediclaimDependant extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'dob' => 'date',
+    ];
+
     const RELATIONSHIPS = [
         'husband' => 'Husband',
         'wife' => 'Wife',
@@ -27,12 +31,18 @@ class MediclaimDependant extends Model
         'mother_in_law' => 'Mother-in-law',
     ];
 
+    const GENDERS = [
+        'male' => 'Male',
+        'female' => 'Female',
+    ];
+
     const TOP_UP_OPTIONS = [
-        '1_lac' => '1 Lac - 4305 + GST',
-        '2_lac' => '2 Lac - 4735 + GST',
-        '3_lac' => '3 Lac - 5535 + GST',
-        '4_lac' => '4 Lac - 6765 + GST',
-        '5_lac' => '5 Lac - 7990 + GST',
+        'none' => 'None',
+        '1_lac' => '₹ 1 Lac - 4305 + GST',
+        '2_lac' => '₹ 2 Lac - 4735 + GST',
+        '3_lac' => '₹ 3 Lac - 5535 + GST',
+        '4_lac' => '₹ 4 Lac - 6765 + GST',
+        '5_lac' => '₹ 5 Lac - 7990 + GST',
     ];
 
     public function employee(): BelongsTo
@@ -45,6 +55,11 @@ class MediclaimDependant extends Model
         return Arr::get(self::RELATIONSHIPS, $this->relationship, $this->relationship);
     }
 
+    public function getGenderLabelAttribute(): string
+    {
+        return Arr::get(self::GENDERS, $this->gender, $this->gender);
+    }
+
     public function getTopUpLabelAttribute(): string
     {
         return Arr::get(self::TOP_UP_OPTIONS, $this->top_up, $this->top_up);
@@ -53,6 +68,14 @@ class MediclaimDependant extends Model
     public static function relationshipOptions(): array
     {
         return collect(self::RELATIONSHIPS)
+            ->map(fn ($label, $value) => compact('label', 'value'))
+            ->values()
+            ->all();
+    }
+
+    public static function genderOptions(): array
+    {
+        return collect(self::GENDERS)
             ->map(fn ($label, $value) => compact('label', 'value'))
             ->values()
             ->all();

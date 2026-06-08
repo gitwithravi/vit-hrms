@@ -26,6 +26,8 @@ class MediclaimDependantRequest extends FormRequest
             'dependants' => 'present|array|max:5',
             'dependants.*.name' => 'nullable|string|min:2|max:100',
             'dependants.*.relationship' => ['nullable', Rule::in(array_keys(MediclaimDependant::RELATIONSHIPS))],
+            'dependants.*.gender' => ['nullable', Rule::in(array_keys(MediclaimDependant::GENDERS))],
+            'dependants.*.dob' => 'nullable|date',
         ];
     }
 
@@ -36,7 +38,9 @@ class MediclaimDependantRequest extends FormRequest
 
             foreach ($this->input('dependants', []) as $index => $dependant) {
                 $hasData = filled($dependant['name'] ?? null)
-                    || filled($dependant['relationship'] ?? null);
+                    || filled($dependant['relationship'] ?? null)
+                    || filled($dependant['gender'] ?? null)
+                    || filled($dependant['dob'] ?? null);
 
                 if (! $hasData) {
                     continue;
@@ -70,6 +74,8 @@ class MediclaimDependantRequest extends FormRequest
             'dependants' => __('employee.mediclaim.dependants'),
             'dependants.*.name' => __('employee.mediclaim.props.name'),
             'dependants.*.relationship' => __('employee.mediclaim.props.relationship'),
+            'dependants.*.gender' => __('employee.mediclaim.props.gender'),
+            'dependants.*.dob' => __('employee.mediclaim.props.dob'),
         ];
     }
 }

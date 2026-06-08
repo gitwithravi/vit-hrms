@@ -19,6 +19,14 @@
             </div>
             <div class="col-span-3 sm:col-span-1">
                 <BaseSelect
+                    v-model="form.gender"
+                    name="gender"
+                    :label="$trans('employee.mediclaim.props.gender')"
+                    :options="preRequisites.genders"
+                />
+            </div>
+            <div class="col-span-3 sm:col-span-1">
+                <BaseSelect
                     v-model="form.topUp"
                     name="topUp"
                     :label="$trans('employee.mediclaim.props.top_up')"
@@ -52,6 +60,7 @@ const emit = defineEmits(["hide"])
 const initForm = {
     name: "",
     relationship: "",
+    gender: "",
     topUp: "",
 }
 
