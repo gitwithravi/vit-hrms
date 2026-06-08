@@ -22,7 +22,7 @@
                 </BaseAlert>
 
                 <BaseAlert v-if="canEdit" design="info">
-                    {{ $trans("employee.mediclaim.dependants_info") }}
+                    You can add up to 5 dependants, adding all the 5 dependants is not mandatory.
                 </BaseAlert>
 
                 <div class="space-y-4">
@@ -100,7 +100,7 @@
                     </BaseCard>
                     </template>
                     <TextMuted v-else>
-                        {{ $trans("employee.mediclaim.no_dependants") }}
+                        No dependants added.
                     </TextMuted>
                 </div>
 
