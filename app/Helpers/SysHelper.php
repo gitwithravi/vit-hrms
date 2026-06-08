@@ -12,7 +12,7 @@ class SysHelper
      */
     public static function isInstalled(): bool
     {
-        return SysHelper::getApp('INSTALLED') ? true : false;
+        return true;
     }
 
     /**
