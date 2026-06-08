@@ -87,7 +87,9 @@ return [
         'module_title' => 'Manage all mediclaim dependant records',
         'module_description' => 'Keep dependant details submitted by employees for mediclaim.',
         'edit_disabled' => 'Mediclaim dependant editing is currently disabled.',
-        'edit_disabled_info' => 'Mediclaim dependant editing is currently disabled by admin.',
+        'edit_disabled_info' => 'The editing of the dependant details is disabled by the HR.',
+        'no_dependants' => 'No dependants added.',
+        'dependants_info' => 'You can add up to 5 dependants, adding all the 5 dependants is not mandatory.',
         'props' => [
             'name' => 'Dependant Name',
             'relationship' => 'Relationship',

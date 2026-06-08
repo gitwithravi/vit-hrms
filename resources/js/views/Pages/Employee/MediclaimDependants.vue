@@ -17,19 +17,20 @@
     <ParentTransition appear :visibility="true">
         <BaseLoader :is-loading="isLoading">
             <div class="space-y-6">
-                <TextMuted v-if="!canEdit">
+                <BaseAlert v-if="!canEdit" design="warning">
                     {{ $trans("employee.mediclaim.edit_disabled_info") }}
-                </TextMuted>
+                </BaseAlert>
 
                 <BaseAlert v-if="canEdit" design="info">
-                    You can add up to 5 dependants, adding all the 5 dependants is not mandatory
+                    {{ $trans("employee.mediclaim.dependants_info") }}
                 </BaseAlert>
 
                 <div class="space-y-4">
-                    <BaseCard
-                        v-for="(dependant, index) in form.dependants"
-                        :key="dependant.key"
-                    >
+                    <template v-if="form.dependants.length">
+                        <BaseCard
+                            v-for="(dependant, index) in form.dependants"
+                            :key="dependant.key"
+                        >
                         <template #title>
                             {{ $trans("employee.mediclaim.dependant") }}
                             {{ index + 1 }}
@@ -97,6 +98,10 @@
                             </div>
                         </div>
                     </BaseCard>
+                    </template>
+                    <TextMuted v-else>
+                        {{ $trans("employee.mediclaim.no_dependants") }}
+                    </TextMuted>
                 </div>
 
                 <BaseCard>
