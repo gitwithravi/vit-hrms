@@ -8,6 +8,7 @@ use App\Models\Employee\MediclaimDependant;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Str;
 
 class MediclaimDependantListService extends ListGenerator
 {
@@ -99,9 +100,13 @@ class MediclaimDependantListService extends ListGenerator
 
     public function filter(Request $request): Builder
     {
+        $employees = Str::toArray($request->query('employees'));
+
         return MediclaimDependant::query()
             ->with(['employee' => fn ($q) => $q->detail()])
-            ->whereHas('employee', fn ($q) => $q->detail()->filterAccessible())
+            ->whereHas('employee', fn ($q) => $q->detail()->filterAccessible()->when($employees, function ($q) use ($employees) {
+                $q->whereIn('uuid', $employees);
+            }))
             ->filter([
                 'App\QueryFilters\LikeMatch:name',
                 'App\QueryFilters\ExactMatch:relationship',
