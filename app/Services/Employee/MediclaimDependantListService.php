@@ -105,7 +105,7 @@ class MediclaimDependantListService extends ListGenerator
         return MediclaimDependant::query()
             ->with(['employee' => fn ($q) => $q->detail()])
             ->whereHas('employee', fn ($q) => $q->detail()->filterAccessible()->when($employees, function ($q) use ($employees) {
-                $q->whereIn('uuid', $employees);
+                $q->whereIn('employees.uuid', $employees);
             }))
             ->filter([
                 'App\QueryFilters\LikeMatch:name',
