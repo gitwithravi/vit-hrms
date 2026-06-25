@@ -8,6 +8,7 @@ use App\Models\Employee\MediclaimDependant;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Str;
 
 class MediclaimDependantListService extends ListGenerator
@@ -134,5 +135,21 @@ class MediclaimDependantListService extends ListGenerator
     public function list(Request $request): AnonymousResourceCollection
     {
         return $this->paginate($request);
+    }
+
+    public function exportList(Request $request): ResourceCollection
+    {
+        return MediclaimDependantResource::collection($this->filter($request)
+            ->orderBy($this->getSort(), $this->getOrder())
+            ->get())
+            ->additional([
+                'headers' => $this->getHeaders(),
+                'meta' => [
+                    'filename' => trans('employee.mediclaim.dependants'),
+                    'allowed_sorts' => $this->allowedSorts,
+                    'default_sort' => $this->defaultSort,
+                    'default_order' => $this->defaultOrder,
+                ],
+            ]);
     }
 }

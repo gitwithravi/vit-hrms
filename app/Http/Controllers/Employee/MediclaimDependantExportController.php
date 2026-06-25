@@ -13,7 +13,7 @@ class MediclaimDependantExportController extends Controller
     {
         $this->authorize('export', MediclaimDependant::class);
 
-        $list = $service->list($request);
+        $list = $service->exportList($request);
 
         return $service->export($list);
     }

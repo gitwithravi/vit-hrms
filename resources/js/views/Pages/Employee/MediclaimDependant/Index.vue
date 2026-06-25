@@ -16,8 +16,14 @@
                     :title="$trans('employee.mediclaim.dependants')"
                     :actions="['filter']"
                     :dropdown-actions="['print', 'pdf', 'excel']"
+                    :headers="dependants.headers || []"
                     @toggleFilter="showFilter = !showFilter"
-                />
+                >
+                    <BaseButton design="white" @click="downloadReport">
+                        <i class="fas fa-download mr-2"></i>
+                        Download Report
+                    </BaseButton>
+                </PageHeaderAction>
             </PageHeader>
         </template>
 
@@ -89,9 +95,12 @@ export default {
 
 <script setup>
 import { ref, reactive, inject } from "vue"
+import { useRoute } from "vue-router"
+import { toQueryString } from "@core/helpers/array"
 import FilterForm from "./Filter.vue"
 
 const emitter = inject("emitter")
+const route = useRoute()
 
 const initUrl = "employee/mediclaimDependant/"
 const showFilter = ref(false)
@@ -109,5 +118,22 @@ const setItems = (data) => {
 
 const setPreRequisites = (data) => {
     Object.assign(preRequisites, data)
+}
+
+const downloadReport = () => {
+    const url = "/app/mediclaim-dependants/export"
+    const columns = (dependants.headers || [])
+        .filter((header) => header.visibility)
+        .map((header) => header.key)
+        .join(",")
+
+    window.open(
+        toQueryString(url, {
+            ...route.query,
+            columns,
+            output: "excel",
+        }),
+        "_blank"
+    ).focus()
 }
 </script>
