@@ -15,7 +15,7 @@ trait SubordinateAccess
 
     public function getAccessibleDesignationIds(string $date = null)
     {
-        if (auth()->user()->is_default) {
+        if (auth()->user()->is_default || auth()->user()->hasRole('attendance-leave-manager')) {
             return;
         }
 
@@ -51,7 +51,7 @@ trait SubordinateAccess
 
     public function getAccessibleBranchIds(string $date = null)
     {
-        if (auth()->user()->is_default) {
+        if (auth()->user()->is_default || auth()->user()->hasRole('attendance-leave-manager')) {
             return;
         }
 
