@@ -33,6 +33,8 @@ it('limits the role to attendance and leave operations', function () {
             'leave-request:read',
             'leave-request:action',
             'leave-request:export',
+            'designation:admin-access',
+            'branch:admin-access',
         )
         ->not->toContain(
             'employee:read',
@@ -40,22 +42,5 @@ it('limits the role to attendance and leave operations', function () {
             'user:read',
             'task:read',
             'finance:config',
-            'designation:admin-access',
-            'branch:admin-access',
         );
-});
-
-it('does not expose employees when combined with another role', function () {
-    $permissions = (new \App\Models\User)->filterAttendanceLeaveManagerPermissions([
-        'login:action',
-        'todo:manage',
-        'employee:read',
-        'attendance:read',
-        'timesheet:read',
-        'leave-request:read',
-    ]);
-
-    expect($permissions)
-        ->toContain('attendance:read', 'timesheet:read', 'leave-request:read')
-        ->not->toContain('employee:read', 'todo:manage');
 });

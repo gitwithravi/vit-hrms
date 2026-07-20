@@ -4,7 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Spatie\Permission\PermissionRegistrar;
 
 return new class extends Migration
 {
@@ -47,14 +46,10 @@ return new class extends Migration
                 ])->all()
             );
         });
-
-        app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
     public function down(): void
     {
         DB::table('roles')->where('name', self::ROLE)->delete();
-
-        app(PermissionRegistrar::class)->forgetCachedPermissions();
     }
 };
