@@ -4,11 +4,12 @@
         "manager",
         "staff",
         "user",
+        "attendance-leave-manager",
         "d-f-a"
     ],
 	"permissions": {
 		"general": {
-            "login:action": ["manager", "staff", "user", "d-f-a"]
+            "login:action": ["manager", "staff", "user", "d-f-a", "attendance-leave-manager"]
         },
         "team": {
             "team:manage": []
@@ -48,7 +49,7 @@
             "designation:edit": [],
             "designation:delete": [],
             "designation:export": ["manager"],
-            "designation:admin-access": ["d-f-a"],
+            "designation:admin-access": ["d-f-a", "attendance-leave-manager"],
             "designation:self-access": [],
             "designation:subordinate-access": ["manager"],
             "branch:read": ["manager"],
@@ -56,7 +57,7 @@
             "branch:edit": [],
             "branch:delete": [],
             "branch:export": ["manager"],
-            "branch:admin-access": [],
+            "branch:admin-access": ["attendance-leave-manager"],
             "branch:self-access": ["manager"],
             "branch:subordinate-access": ["manager"]
         },
@@ -78,36 +79,36 @@
         },
         "leave": {
             "leave:config": [],
-            "leave-allocation:read": ["manager", "staff"],
-            "leave-allocation:create": ["manager"],
-            "leave-allocation:edit": ["manager"],
+            "leave-allocation:read": ["manager", "staff", "attendance-leave-manager"],
+            "leave-allocation:create": ["manager", "attendance-leave-manager"],
+            "leave-allocation:edit": ["manager", "attendance-leave-manager"],
             "leave-allocation:delete": [],
-            "leave-allocation:export": ["manager"],
-            "leave-request:read": ["manager", "staff"],
-            "leave-request:create": ["manager", "staff"],
-            "leave-request:edit": ["manager"],
-            "leave-request:action": ["manager"],
+            "leave-allocation:export": ["manager", "attendance-leave-manager"],
+            "leave-request:read": ["manager", "staff", "attendance-leave-manager"],
+            "leave-request:create": ["manager", "staff", "attendance-leave-manager"],
+            "leave-request:edit": ["manager", "attendance-leave-manager"],
+            "leave-request:action": ["manager", "attendance-leave-manager"],
             "leave-request:delete": [],
-            "leave-request:export": ["manager"]
+            "leave-request:export": ["manager", "attendance-leave-manager"]
         },
         "attendance": {
             "attendance:config": [],
-            "attendance:read": ["manager", "staff", "d-f-a"],
-            "attendance:mark": ["manager"],
-            "attendance:export": ["manager"],
-            "work-shift:read": ["manager"],
-            "work-shift:create": ["manager"],
-            "work-shift:edit": ["manager"],
-            "work-shift:delete": ["manager"],
-            "work-shift:export": ["manager"],
-            "work-shift:assign": ["manager"],
-            "timesheet:import": ["manager"],
-            "timesheet:sync": ["manager"],
-            "timesheet:read": ["manager", "staff"],
-            "timesheet:create": ["manager"],
-            "timesheet:edit": ["manager"],
-            "timesheet:delete": ["manager"],
-            "timesheet:export": ["manager"]
+            "attendance:read": ["manager", "staff", "d-f-a", "attendance-leave-manager"],
+            "attendance:mark": ["manager", "attendance-leave-manager"],
+            "attendance:export": ["manager", "attendance-leave-manager"],
+            "work-shift:read": ["manager", "attendance-leave-manager"],
+            "work-shift:create": ["manager", "attendance-leave-manager"],
+            "work-shift:edit": ["manager", "attendance-leave-manager"],
+            "work-shift:delete": ["manager", "attendance-leave-manager"],
+            "work-shift:export": ["manager", "attendance-leave-manager"],
+            "work-shift:assign": ["manager", "attendance-leave-manager"],
+            "timesheet:import": ["manager", "attendance-leave-manager"],
+            "timesheet:sync": ["manager", "attendance-leave-manager"],
+            "timesheet:read": ["manager", "staff", "attendance-leave-manager"],
+            "timesheet:create": ["manager", "attendance-leave-manager"],
+            "timesheet:edit": ["manager", "attendance-leave-manager"],
+            "timesheet:delete": ["manager", "attendance-leave-manager"],
+            "timesheet:export": ["manager", "attendance-leave-manager"]
         },
         "payroll": {
             "payroll:config": [],
