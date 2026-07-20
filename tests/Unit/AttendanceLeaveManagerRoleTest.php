@@ -33,6 +33,8 @@ it('limits the role to attendance and leave operations', function () {
             'leave-request:read',
             'leave-request:action',
             'leave-request:export',
+            'designation:admin-access',
+            'branch:admin-access',
         )
         ->not->toContain(
             'employee:read',
@@ -40,7 +42,5 @@ it('limits the role to attendance and leave operations', function () {
             'user:read',
             'task:read',
             'finance:config',
-            'designation:admin-access',
-            'branch:admin-access',
         );
 });
