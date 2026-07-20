@@ -19,7 +19,7 @@ class ValidateRole
             return;
         }
 
-        if ($user->hasRole('d-f-a')) {
+        if ($user->hasAnyRole(['d-f-a', 'attendance-leave-manager'])) {
             return;
         }
 

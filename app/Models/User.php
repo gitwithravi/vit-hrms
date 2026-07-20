@@ -211,7 +211,7 @@ class User extends Authenticatable
 
     public function getIsStaffAttribute()
     {
-        if ($this->hasRole('d-f-a')) {
+        if ($this->hasAnyRole(['d-f-a', 'attendance-leave-manager'])) {
             return true;
         }
 
