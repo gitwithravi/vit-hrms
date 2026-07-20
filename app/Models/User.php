@@ -128,11 +128,38 @@ class User extends Authenticatable
 
         $allPermissions = $this->getAllPermissions()->pluck('name')->all();
 
+        if ($this->hasRole('attendance-leave-manager')) {
+            return $this->filterAttendanceLeaveManagerPermissions($allPermissions);
+        }
+
         if ($this->hasRole('d-f-a')) {
             return ['designation:admin-access', ...$allPermissions];
         }
 
         return $allPermissions;
+    }
+
+    public function getSystemPermissions(): array
+    {
+        return collect(Arr::get(Arr::getVar('permission'), 'permissions', []))
+            ->flatMap(fn (array $permissions) => array_keys($permissions))
+            ->values()
+            ->all();
+    }
+
+    public function getAttendanceLeaveManagerPermissions(): array
+    {
+        return collect(Arr::get(Arr::getVar('permission'), 'permissions', []))
+            ->flatMap(fn (array $permissions) => collect($permissions)
+                ->filter(fn (array $roles) => in_array('attendance-leave-manager', $roles, true))
+                ->keys())
+            ->values()
+            ->all();
+    }
+
+    public function filterAttendanceLeaveManagerPermissions(array $permissions): array
+    {
+        return array_values(array_intersect($permissions, $this->getAttendanceLeaveManagerPermissions()));
     }
 
     public function getAvatarAttribute(): string
@@ -211,7 +238,7 @@ class User extends Authenticatable
 
     public function getIsStaffAttribute()
     {
-        if ($this->hasRole('d-f-a')) {
+        if ($this->hasAnyRole(['d-f-a', 'attendance-leave-manager'])) {
             return true;
         }
 

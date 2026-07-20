@@ -50,6 +50,12 @@ class AuthServiceProvider extends \Illuminate\Foundation\Support\Providers\AuthS
                 return true;
             }
 
+            if ($user->hasRole('attendance-leave-manager')
+                && in_array($ability, $user->getSystemPermissions(), true)
+                && ! in_array($ability, $user->getAttendanceLeaveManagerPermissions(), true)) {
+                return false;
+            }
+
             if ($user->hasRole('d-f-a') && $ability == 'designation:admin-access') {
                 return true;
             }
